@@ -16,14 +16,13 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('role_id');
+            $table->enum('role', ['admin', 'staff', 'vendor', 'worker', 'customer'])->default('customer');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->boolean('is_verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('parent_id')->references('id')->on('users');
         });
     }
