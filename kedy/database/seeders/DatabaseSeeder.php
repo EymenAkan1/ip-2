@@ -17,10 +17,5 @@ class DatabaseSeeder extends Seeder
         //SIRALAMA BURADA YAPILACAK php artisan migrate:fresh --seed tabloları oluştur ve seedle \ php artisan db:seed direkt olarak seed çalıştır
 
 
-        $this->call([UserTableSeeder::class]);//En üstte olacak bu arkadaş
-
-
-        //$this->call([CarTableSeeder::class]);
-
     }
 }
