@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('plate')->unique()->nullable();
-            $table->string('make')->nullable();
-            $table->unsignedBigInteger('model')->nullable();
+            $table->unsignedBigInteger('make_id')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
             $table->year('year')->nullable();
             $table->string('color');
             $table->enum('type', ['car', 'motorcycle', 'truck', 'van', 'bus', 'bicycle']);
@@ -26,8 +26,8 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('make')->references('id')->on('makes')->onDelete('cascade');
-            $table->foreign('model')->references('id')->on('models')->onDelete('cascade');
+            $table->foreign('make_id')->references('id')->on('makes')->onDelete('cascade');
+            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade');
         });
     }
 

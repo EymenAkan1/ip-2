@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('1'),
                 'role' => 'admin', // Enum değer
                 'parent_id' => null,
+                'is_verified' => 1,
             ],
             [
                 'name' => 'Staff',
@@ -27,6 +28,8 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('2'),
                 'role' => 'staff', // Enum değer
                 'parent_id' => 1, // Admin kullanıcısı
+                'is_verified' => 1,
+
             ],
             [
                 'name' => 'Vendor',
@@ -34,6 +37,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('3'),
                 'role' => 'vendor',
                 'parent_id' => null,
+                'is_verified' => 1,
             ],
             [
                 'name' => 'Worker',
@@ -41,6 +45,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('4'),
                 'role' => 'worker',
                 'parent_id' => 3,
+                'is_verified' => 0,
             ],
             [
                 'name' => 'customer',
@@ -48,6 +53,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('5'),
                 'role' => 'customer',
                 'parent_id' => null,
+                'is_verified' => 1,
             ],
         ]);
     }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use DB;
 
 class MakesTableSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class MakesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('makes')->insert([
+
+            ['brand' => 'Mercedes'],
+            ['brand' => 'Audi']
+        ]);
     }
 }

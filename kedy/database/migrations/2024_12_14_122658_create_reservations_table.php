@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,20 +13,23 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('vendor_id');
             $table->unsignedBigInteger('parking_lot_id');
             $table->unsignedBigInteger('vehicle_id');
-            $table->unsignedBigInteger('valet_id')->nullable();
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
-            $table->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('hourly');
+            $table->unsignedBigInteger('worker_id')->nullable();
+            $table->timestamp('reservation_start_time');
+            $table->timestamp('reservation_end_time');
+            $table->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('hour');
             $table->enum('reservation_status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending');
             $table->decimal('price', 6, 2)->default(0);
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('users');
-            $table->foreign('valet_id')->references('id')->on('users');
+            $table->foreign('vendor_id')->references('id')->on('users');
+            $table->foreign('worker_id')->references('id')->on('users');
             $table->foreign('parking_lot_id')->references('id')->on('parking_lots');
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');        });
+            $table->foreign('vehicle_id')->references('id')->on('vehicles');
+        });
     }
 
     /**

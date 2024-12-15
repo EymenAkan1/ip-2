@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('work_type'); // İş türü: "vale", "temizlik"
 
             // Ortak alan
-            $table->timestamp('started_at')->nullable(); // İşin başlangıç zamanı
-            $table->timestamp('completed_at')->nullable(); // İşin bitiş zamanı
+            $table->timestamp('started_at'); // İşin başlangıç zamanı
+            $table->timestamp('completed_at'); // İşin bitiş zamanı
             $table->boolean('completed')->default(false); // İş tamamlandı mı
 
             // Vale alanı
