@@ -32,15 +32,7 @@ class Vendor extends Model
      */
     public function parkingLots()
     {
-        return $this->hasMany(ParkingLot::class);
+        return $this->hasMany(ParkingLot::class, 'vendor_id');
     }
 
-    /**
-     * Vendor'un araç ilişkisi
-     * Bir Vendor birden fazla araç ekleyebilir
-     */
-    public function vehicles()
-    {
-        return $this->hasMany(Vehicle::class, 'user_id');
-    }
 }
