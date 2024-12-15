@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -35,27 +36,19 @@ class UsersTableSeeder extends Seeder
                 'parent_id' => null,
             ],
             [
-                'name' => 'Vendor',
-                'email' => 'vendor@example.com',
-                'password' => bcrypt('3'),
-                'role' => 'vendor',
-                'parent_id' => null,
+                'name' => 'Worker',
+                'email' => 'worker@example.com',
+                'password' => bcrypt('4'),
+                'role' => 'worker',
+                'parent_id' => 3,
             ],
             [
-                'name' => 'Vendor',
-                'email' => 'vendor@example.com',
-                'password' => bcrypt('3'),
-                'role' => 'vendor',
+                'name' => 'customer',
+                'email' => 'customer@example.com',
+                'password' => bcrypt('5'),
+                'role' => 'customer',
                 'parent_id' => null,
             ],
-            [
-                'name' => 'Vendor',
-                'email' => 'vendor@example.com',
-                'password' => bcrypt('3'),
-                'role' => 'vendor',
-                'parent_id' => null,
-            ],
-
         ]);
     }
 }
