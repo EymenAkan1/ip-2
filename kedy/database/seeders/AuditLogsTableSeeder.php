@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use DB;
 
 class AuditLogsTableSeeder extends Seeder
 {
@@ -12,10 +13,14 @@ class AuditLogsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        AuditLog::create([
-            'user_id' => 3,
-            'action' => 'Reservation Created',
-            'details' => 'Kullanıcı 34 ABC 123 plakalı araç için rezervasyon oluşturdu.',
+        DB::table('audit_logs')->insert([
+            [
+                'customer_id' => 1,
+                'action' => 'Reservation Created',
+                'table_name' => 'reservations',
+                'changes' => null,
+                'occurred_at' => now(),
+            ],
         ]);
 
     }

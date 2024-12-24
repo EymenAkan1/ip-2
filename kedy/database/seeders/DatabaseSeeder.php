@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ParkingLotTableSeeder::class);
         $this->call(ReservationTableSeeder::class);
         $this->call(WorkerLogsTableSeeder::class);
+        $this->call(AuditLogsTableSeeder::class);
 
 
     }

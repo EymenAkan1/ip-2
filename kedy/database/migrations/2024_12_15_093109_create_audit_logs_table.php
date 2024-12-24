@@ -12,15 +12,14 @@ return new class extends Migration {
     {
         Schema::create('audit_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->string('action');
             $table->string('table_name')->nullable();
-            $table->unsignedBigInteger('record_id')->nullable();
             $table->json('changes')->nullable();
             $table->timestamp('occurred_at')->useCurrent();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
