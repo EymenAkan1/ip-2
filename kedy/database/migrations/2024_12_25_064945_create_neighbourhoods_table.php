@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('neighbourhoods', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('town_id');
+            $table->string('name');
+
+            $table->foreign('town_id')->references('id')->on('towns');
         });
     }
 
