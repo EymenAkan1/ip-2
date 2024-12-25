@@ -32,21 +32,15 @@ class Vehicle extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Vehicle'ın markası (Make) ilişkisi
-     * Bir Vehicle sadece bir Make'e ait olacaktır
-     */
+
     public function make()
     {
-        return $this->belongsTo(Make::class, 'make');
+        return $this->belongsTo(CarMake::class, 'make_id');
     }
 
-    /**
-     * Vehicle'ın modeli (Model) ilişkisi
-     * Bir Vehicle sadece bir Model'e ait olacaktır
-     */
+
     public function model()
     {
-        return $this->belongsTo(Model::class, 'model');
+        return $this->belongsTo(CarModel::class, 'model_id');
     }
 }

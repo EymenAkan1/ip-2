@@ -25,9 +25,9 @@ return new class extends Migration {
             $table->enum('role', ['owner', 'renter', 'guest']);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('make_id')->references('id')->on('makes')->onDelete('cascade');
-            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('make_id')->references('id')->on('car_makes');
+            $table->foreign('model_id')->references('id')->on('car_models');
         });
     }
 
