@@ -9,6 +9,13 @@ class Neighbourhood extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'town_id'];
+
+    public function town()
+    {
+        return $this->belongsTo(Town::class);
+    }
+
     public $timestamps = false;
 
 }

@@ -12,7 +12,7 @@ class AdminUserController extends Controller
     // Kullanıcıları listele
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(20);
         return view('admin.users.index', compact('users'));
     }
 
@@ -98,4 +98,5 @@ class AdminUserController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'Kullanıcı profili başarıyla güncellendi.');
     }
+
 }

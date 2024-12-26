@@ -16,8 +16,10 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description');
             $table->string('location');
-            $table->string('longitude');
-            $table->string('latitude');
+            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('district_id');
+            $table->unsignedBigInteger('town_id');
+            $table->unsignedBigInteger('neighbourhood_id');
             $table->integer('capacity');
             $table->integer('available_capacity');
             $table->boolean('is_open')->default(false);
@@ -29,6 +31,11 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->foreign('vendor_id')->references('id')->on('vendors');
+            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('district_id')->references('id')->on('districts');
+            $table->foreign('town_id')->references('id')->on('towns');
+            $table->foreign('neighbourhood_id')->references('id')->on('neighbourhoods');
+
         });
     }
 

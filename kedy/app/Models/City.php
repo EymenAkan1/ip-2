@@ -9,5 +9,15 @@ class City extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'plate'
+    ];
+
+    public function districts()
+    {
+        return $this->hasMany(District::class);
+    }
+
     public $timestamps = false;
 }
