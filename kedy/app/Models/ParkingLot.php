@@ -9,6 +9,7 @@ class ParkingLot extends Model
 {
     use HasFactory;
 
+    protected $table = 'parking_lots';
     protected $fillable = [
         'user_id',
         'name',

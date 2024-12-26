@@ -29,8 +29,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
 
-    switch (Auth::user()->role)
-    {
+    switch (Auth::user()->role) {
         case 'admin':
             return response()->redirectTo('/admin/dashboard');
         case 'staff':
@@ -50,8 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';
 
 
 /*
@@ -87,7 +85,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('staff/dashboard', [StaffDashboardController::class, 'index'])->name('staff.dashboard');
-    Route::post('/store', [StaffDashboardController::class, 'store'])->name('staff.store');
+    Route::get('/create', [StaffDashboardController::class, 'create'])->name('create');
+    Route::post('/staff/parking-lot/store', [StaffDashboardController::class, 'storeParkingLot'])->name('staff.parking_lot.store');
+
+    Route::get('/get-districts/{city_id}', [StaffDashboardController::class, 'getDistricts']);
+    Route::get('/get-towns/{district_id}', [StaffDashboardController::class, 'getTowns']);
+    Route::get('/get-neighbourhoods/{town_id}', [StaffDashboardController::class, 'getNeighbourhoods']);
 });
 
 

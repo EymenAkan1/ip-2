@@ -12,7 +12,7 @@
         @endif
 
         <!-- Form -->
-        <form action="{{ route('staff.store') }}" method="POST">
+        <form action="{{ route('staff.parking_lot.store') }}" method="POST">
             @csrf
 
             <!-- Vendor -->
@@ -21,7 +21,7 @@
                 <select id="vendor_id" name="vendor_id" class="form-select mt-1 block w-full" required>
                     <option value="">Bir Vendor Seçin</option>
                     @foreach ($vendors as $vendor)
-                        <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                        <option value="{{ $vendor->id }}">ID:{{ $vendor->id }} İsim: {{ $vendor->name }}</option>
                     @endforeach
                 </select>
                 @error('vendor_id')
@@ -32,13 +32,9 @@
             <!-- Name -->
             <div class="mb-4">
                 <label for="ParkingLot_name" class="block text-sm font-medium text-gray-700">Otopark İsmi</label>
-                <select id="ParkingLot_name" name="ParkingLot_name" class="form-select mt-1 block w-full" required>
-                    <option value="">Otopark Seçin</option>
-                    @foreach ($parkinglots as $parkinglot)
-                        <option value="{{ $parkinglot->id }}">{{ $parkinglot->name }}</option>
-                    @endforeach
-                </select>
-                @error('name')
+                <input type="text" id="ParkingLot_name" name="ParkingLot_name" class="form-input mt-1 block w-full"
+                       required>
+                @error('ParkingLot_name')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
@@ -63,6 +59,17 @@
                     <option value="">İlçe seçin</option>
                 </select>
                 @error('district_id')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Semt -->
+            <div class="mb-4">
+                <label for="town_id" class="block text-sm font-medium text-gray-700">Semt Seçin</label>
+                <select id="town_id" name="town_id" class="form-select mt-1 block w-full" required>
+                    <option value="">Semt seçin</option>
+                </select>
+                @error('town_id')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
@@ -118,19 +125,19 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery'yi ekliyoruz -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Şehir seçildiğinde ilçeleri yükle
-        $('#city_id').on('change', function() {
+        $('#city_id').on('change', function () {
             var city_id = $(this).val();
             if (city_id) {
                 $.ajax({
                     url: '/get-districts/' + city_id,  // Şehir ID'si ile ilçeleri getirmek için AJAX isteği
                     type: 'GET',
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         $('#district_id').empty();  // İlçe dropdown'unu temizle
                         $('#district_id').append('<option value="">Bir ilçe seçin</option>');  // İlk seçenek
-                        $.each(data, function(key, value) {
+                        $.each(data, function (key, value) {
                             $('#district_id').append('<option value="' + value.id + '">' + value.name + '</option>'); // İlçe seçeneklerini ekle
                         });
                     }
@@ -142,24 +149,45 @@
         });
 
         // İlçe seçildiğinde mahalleleri yükle
-        $('#district_id').on('change', function() {
+        $('#district_id').on('change', function () {
             var district_id = $(this).val();
             if (district_id) {
                 $.ajax({
-                    url: '/get-neighbourhoods/' + district_id,  // İlçe ID'si ile mahalleleri getirmek için AJAX isteği
+                    url: '/get-towns/' + district_id,  // İlçe ID'si ile mahalleleri getirmek için AJAX isteği
                     type: 'GET',
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
+                        $('#town_id').empty();  // Mahalle dropdown'unu temizle
+                        $('#town_id').append('<option value="">Bir Semt seçin</option>');  // İlk seçenek
+                        $.each(data, function (key, value) {
+                            $('#town_id').append('<option value="' + value.id + '">' + value.name + '</option>'); // Mahalle seçeneklerini ekle
+                        });
+                    }
+                });
+            } else {
+                $('#town_id').empty();
+                $('#town_id').append('<option value="">Bir Semt seçin</option>');
+            }
+        });
+
+        $('#town_id').on('change', function () {
+            var town_id = $(this).val();
+            if (town_id) {
+                $.ajax({
+                    url: '/get-neighbourhoods/' + town_id,  // İlçe ID'si ile mahalleleri getirmek için AJAX isteği
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
                         $('#neighbourhood_id').empty();  // Mahalle dropdown'unu temizle
-                        $('#neighbourhood_id').append('<option value="">Bir mahalle seçin</option>');  // İlk seçenek
-                        $.each(data, function(key, value) {
+                        $('#neighbourhood_id').append('<option value="">Bir Mahalle seçin</option>');  // İlk seçenek
+                        $.each(data, function (key, value) {
                             $('#neighbourhood_id').append('<option value="' + value.id + '">' + value.name + '</option>'); // Mahalle seçeneklerini ekle
                         });
                     }
                 });
             } else {
                 $('#neighbourhood_id').empty();
-                $('#neighbourhood_id').append('<option value="">Bir mahalle seçin</option>');
+                $('#neighbourhood_id').append('<option value="">Bir Mahalle seçin</option>');
             }
         });
     });

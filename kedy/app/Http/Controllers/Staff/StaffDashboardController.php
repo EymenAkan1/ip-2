@@ -28,16 +28,47 @@ class StaffDashboardController extends Controller
         return view('staff.dashboard', compact('vendors', 'parkinglots', 'cities', 'districts', 'towns', 'neighbourhoods'));
     }
 
+    public function getDistricts($city_id)
+    {
+        // Veritabanından şehir ID'sine bağlı ilçeleri al
+        $districts = District::where('city_id', $city_id)->get();
+        return response()->json($districts);
+    }
+
+    // İlçe seçildiğinde mahalleleri al
+    public function getTowns($district_id)
+    {
+        // Veritabanından ilçe ID'sine bağlı mahalleleri al
+        $towns = Town::where('district_id', $district_id)->get();
+        return response()->json($towns);
+    }
+
+    // İlçe seçildiğinde mahalleleri al
+    public function getNeighbourhoods($town_id)
+    {
+        // Veritabanından ilçe ID'sine bağlı mahalleleri al
+        $neighbourhoods = Neighbourhood::where('town_id', $town_id)->get();
+        return response()->json($neighbourhoods);
+    }
+
     // Veri ekleme işlemi
-    public function store(Request $request)
+    public function storeParkingLot(Request $request)
     {
         // Formdan gelen verileri doğrulama
         $request->validate([
             'vendor_id' => 'required|exists:vendors,id',
             'parking_lot_id' => 'required|exists:parking_lots,id',
+            'name' => 'required|string',
+            'description' => 'required|string',
             'location' => 'required|string',
+            'city_id' => 'required|exists:cities,id',
+            'district_id' => 'required|exists:districts,id',
+            'town_id' => 'required|exists:towns,id',
+            'neighbourhood_id' => 'required|exists:neighbourhoods,id',
             'capacity' => 'required|integer',
+            'avaible_capacity' => 'required|integer',
             'is_open' => 'required|boolean',
+            'type' => 'requrired|enum',
             'has_valet_service' => 'required|boolean',
             'has_cleaning_service' => 'required|boolean',
             'has_electric_car_charging' => 'required|boolean',
@@ -47,6 +78,7 @@ class StaffDashboardController extends Controller
         ParkingLot::create([
             'vendor_id' => $request->vendor_id,
             'name' => $request->name,
+            'description' => $request->description,
             'location' => $request->location,
             'city_id' => $request->city_id,
             'district_id' => $request->district_id,
@@ -61,6 +93,6 @@ class StaffDashboardController extends Controller
             'has_electric_car_charging' => $request->has_electric_car_charging,
         ]);
 
-        return redirect()->back()->with('success', 'Yeni otopark başarıyla kaydedildi.');
+        return redirect()->route('staff.create')->with('success', 'Otopark başarıyla kaydedildi.');
     }
 }
