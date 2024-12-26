@@ -15,13 +15,27 @@
         <form action="{{ route('staff.parking_lot.store') }}" method="POST">
             @csrf
 
-            <!-- Vendor -->
+            <!-- Vendor Id-->
             <div class="mb-4">
                 <label for="vendor_id" class="block text-sm font-medium text-gray-700">Vendor Seçin</label>
                 <select id="vendor_id" name="vendor_id" class="form-select mt-1 block w-full" required>
                     <option value="">Bir Vendor Seçin</option>
                     @foreach ($vendors as $vendor)
-                        <option value="{{ $vendor->id }}">ID:{{ $vendor->id }} İsim: {{ $vendor->name }}</option>
+                        <option value="{{ $vendor->id }}">ID:{{ $vendor->id }}</option>
+                    @endforeach
+                </select>
+                @error('vendor_id')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Vendor -->
+            <div class="mb-4">
+                <label for="vendor_name" class="block text-sm font-medium text-gray-700">Vendor Seçin</label>
+                <select id="vendor_name" name="vendor_name" class="form-select mt-1 block w-full" required>
+                    <option value="">Bir Vendor Seçin</option>
+                    @foreach ($vendors as $vendor)
+                        <option value="{{ $vendor->id }}">İsim: {{ $vendor->name }}</option>
                     @endforeach
                 </select>
                 @error('vendor_id')
@@ -39,6 +53,27 @@
                 @enderror
             </div>
 
+            <!-- Açıklama -->
+            <div class="mb-4">
+                <label for="description" class="block text-sm font-medium text-gray-700">Açıklama</label>
+                <textarea id="description" name="description" class="form-textarea mt-1 block w-full"
+                          rows="3">{{ old('description') }}</textarea>
+                @error('description')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Lokasyon -->
+            <div class="mb-4">
+                <label for="location" class="block text-sm font-medium text-gray-700">Lokasyon</label>
+                <input type="text" id="location" name="location" value="{{ old('location') }}"
+                       class="form-input mt-1 block w-full" required>
+                @error('location')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Şehir -->
             <div class="mb-4">
                 <label for="city_id" class="block text-sm font-medium text-gray-700">Şehir Seçin</label>
                 <select id="city_id" name="city_id" class="form-select mt-1 block w-full" required>
@@ -84,6 +119,7 @@
                 <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
+
             <!-- Capacity -->
             <div class="mb-4">
                 <label for="capacity" class="block text-sm font-medium text-gray-700">Kapasite</label>
@@ -94,10 +130,55 @@
                 @enderror
             </div>
 
+            <div class="mb-4">
+                <label for="available_capacity" class="block text-sm font-medium text-gray-700">Mevcut Kapasite</label>
+                <input type="number" id="available_capacity" name="available_capacity"
+                       class="form-input mt-1 block w-full" min="1" value="{{ old('available_capacity') }}"
+                       placeholder="Mevcut Kapasite" required>
+                @error('available_capacity')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Açık mı? -->
+            <div class="mb-4">
+                <label for="is_open" class="block text-sm font-medium text-gray-700">Açık mı?</label>
+                <input type="checkbox" id="is_open" name="is_open" class="form-checkbox mt-1 block"
+                       @if(old('is_open')) checked @endif>
+                @error('is_open')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Tür -->
+            <div class="mb-4">
+                <label for="type" class="block text-sm font-medium text-gray-700">Otopark Türü</label>
+                <input type="text" id="type" name="type" class="form-input mt-1 block w-full" value="{{ old('type') }}"
+                       required>
+                @error('type')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Kullanılabilir mi? -->
+            <div class="mb-4">
+                <label for="is_available" class="block text-sm font-medium text-gray-700">Kullanılabilir mi?</label>
+                <input type="checkbox" id="is_available" name="is_available" class="form-checkbox mt-1 block"
+                       @if(old('is_available')) checked @endif>
+                @error('is_available')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Services -->
             <div class="mb-4">
                 <label for="services" class="block text-sm font-medium text-gray-700">Servisler</label>
                 <div class="flex items-center space-x-4 mt-2">
+                    <div>
+                        <input type="checkbox" id="has_electric_car_charging" name="has_electric_car_charging">
+                        <label for="has_electric_car_charging" class="text-sm font-medium text-gray-700">Elektrikli Araç
+                            Şarjı</label>
+                    </div>
                     <div>
                         <input type="checkbox" id="has_valet_service" name="has_valet_service">
                         <label for="has_valet_service" class="text-sm font-medium text-gray-700">Vale Servisi</label>
@@ -106,11 +187,6 @@
                         <input type="checkbox" id="has_cleaning_service" name="has_cleaning_service">
                         <label for="has_cleaning_service" class="text-sm font-medium text-gray-700">Temizlik
                             Servisi</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="has_electric_car_charging" name="has_electric_car_charging">
-                        <label for="has_electric_car_charging" class="text-sm font-medium text-gray-700">Elektrikli Araç
-                            Şarjı</label>
                     </div>
                 </div>
             </div>
