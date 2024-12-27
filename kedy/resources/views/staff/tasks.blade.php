@@ -7,6 +7,7 @@
     @if($role === 'admin')
         <div>
             <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 hover:bg-gray-700">Admin Dashboard</a>
+
             <a href="{{ route('admin.users_index') }}" class="block py-2 px-4 hover:bg-gray-700">User Management</a>
         </div>
     @endif
