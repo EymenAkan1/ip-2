@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('vendor_id');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('location');
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('district_id');

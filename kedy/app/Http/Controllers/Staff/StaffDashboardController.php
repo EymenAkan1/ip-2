@@ -24,8 +24,16 @@ class StaffDashboardController extends Controller
         $towns = Town::orderBy('name', 'asc')->get();
         $neighbourhoods = Neighbourhood::orderBy('name', 'asc')->get();
 
+        $parkingLotTypes = [
+            'indoor' => 'Indoor',
+            'outdoor' => 'Outdoor',
+            'garage' => 'Garage',
+            'underground' => 'Underground',
+            'building' => 'Building',
+            'smart' => 'Smart'
+        ];
 
-        return view('staff.dashboard', compact('vendors', 'parkinglots', 'cities', 'districts', 'towns', 'neighbourhoods'));
+        return view('staff.dashboard', compact('vendors', 'parkinglots', 'cities', 'districts', 'towns', 'neighbourhoods', 'parkingLotTypes'));
     }
 
     public function getDistricts($city_id)
@@ -54,45 +62,50 @@ class StaffDashboardController extends Controller
     // Veri ekleme işlemi
     public function storeParkingLot(Request $request)
     {
-        // Formdan gelen verileri doğrulama
-        $request->validate([
+
+        // Form verilerini doğrula
+        \Log::info('Gelen Form Verileri:', $request->all());
+        $validated = $request->validate([
             'vendor_id' => 'required|exists:vendors,id',
-            'name' => 'required|string|max:255',
+            'ParkingLot_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'location' => 'nullable|string',
-            'City' => 'required|exists:cities,id',
-            'district' => 'required|exists:districts,id',
-            'town' => 'required|exists:towns,id',
-            'neighbourhood' => 'required|exists:neighbourhoods,id',
+            'location' => 'required|string',
+            'city_id' => 'required|exists:cities,id',
+            'district_id' => 'required|exists:districts,id',
+            'town_id' => 'required|exists:towns,id',
+            'neighbourhood_id' => 'required|exists:neighbourhoods,id',
             'capacity' => 'required|integer|min:1',
-            'available_capacity' => 'required|integer|min:0',
+            'available_capacity' => 'required|integer|min:1|max:' . $request->capacity,
             'is_open' => 'nullable|boolean',
-            'type' => 'nullable|string',
+            'type' => 'required|string|max:255',
             'is_available' => 'nullable|boolean',
+            'has_electric_car_charging' => 'nullable|boolean',
             'has_valet_service' => 'nullable|boolean',
             'has_cleaning_service' => 'nullable|boolean',
-            'has_electric_car_charging' => 'nullable|boolean',
         ]);
 
-        // Yeni otopark verisini kaydetme
+        // Veritabanına kaydet
         ParkingLot::create([
-            'vendor_id' => $request->vendor_id,
-            'name' => $request->name,
-            'description' => $request->description,
-            'location' => $request->location,
-            'city_id' => $request->city_id,
-            'district_id' => $request->district_id,
-            'town_id' => $request->town_id,
-            'neighbourhood_id' => $request->neighbourhood_id,
-            'capacity' => $request->capacity,
-            'available_capacity' => $request->available_capacity,
-            'is_open' => $request->is_open,
-            'type' => $request->type,
-            'has_valet_service' => $request->has_valet_service,
-            'has_cleaning_service' => $request->has_cleaning_service,
-            'has_electric_car_charging' => $request->has_electric_car_charging,
+            'vendor_id' => $validated['vendor_id'],
+            'name' => $validated['ParkingLot_name'],
+            'description' => $validated['description'],
+            'location' => $validated['location'],
+            'city_id' => $validated['city_id'],
+            'district_id' => $validated['district_id'],
+            'town_id' => $validated['town_id'],
+            'neighbourhood_id' => $validated['neighbourhood_id'],
+            'capacity' => $validated['capacity'],
+            'available_capacity' => $validated['available_capacity'],
+            'is_open' => $validated['is_open'] ?? 0,
+            'type' => $validated['type'],
+            'is_available' => $validated['is_available'] ?? 0,
+            'has_electric_car_charging' => $request->has($validated['has_electric_car_charging']),
+            'has_valet_service' => $request->has($validated['has_valet_service']),
+            'has_cleaning_service' => $request->has($validated['has_cleaning_service']),
         ]);
 
-        return redirect()->route('staff.create')->with('success', 'Otopark başarıyla kaydedildi.');
+
+        // Kullanıcıyı bir yere yönlendir
+        return back()->with('success', 'Otopark başarıyla eklendi.');
     }
 }

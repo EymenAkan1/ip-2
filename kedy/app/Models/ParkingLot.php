@@ -11,14 +11,14 @@ class ParkingLot extends Model
 
     protected $table = 'parking_lots';
     protected $fillable = [
-        'user_id',
+        'vendor_id',
         'name',
         'description',
         'location',
-        'City',
-        'district',
-        'town',
-        'neighbourhood',
+        'city_id',
+        'district_id',
+        'town_id',
+        'neighbourhood_id',
         'capacity',
         'available_capacity',
         'is_open',

@@ -1,4 +1,4 @@
-@extends('layouts.staff')
+@extends('layouts.app')
 
 @section('content')
     <div class="container mx-auto">
@@ -15,20 +15,6 @@
         <form action="{{ route('staff.parking_lot.store') }}" method="POST">
             @csrf
 
-            <!-- Vendor Id-->
-            <div class="mb-4">
-                <label for="vendor_id" class="block text-sm font-medium text-gray-700">Vendor Seçin</label>
-                <select id="vendor_id" name="vendor_id" class="form-select mt-1 block w-full" required>
-                    <option value="">Bir Vendor Seçin</option>
-                    @foreach ($vendors as $vendor)
-                        <option value="{{ $vendor->id }}">ID:{{ $vendor->id }}</option>
-                    @endforeach
-                </select>
-                @error('vendor_id')
-                <p class="text-red-500 text-sm">{{ $message }}</p>
-                @enderror
-            </div>
-
             <!-- Vendor -->
             <div class="mb-4">
                 <label for="vendor_name" class="block text-sm font-medium text-gray-700">Vendor Seçin</label>
@@ -38,7 +24,7 @@
                         <option value="{{ $vendor->id }}">İsim: {{ $vendor->name }}</option>
                     @endforeach
                 </select>
-                @error('vendor_id')
+                @error('vendor_name')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
@@ -143,7 +129,7 @@
             <!-- Açık mı? -->
             <div class="mb-4">
                 <label for="is_open" class="block text-sm font-medium text-gray-700">Açık mı?</label>
-                <input type="checkbox" id="is_open" name="is_open" class="form-checkbox mt-1 block"
+                <input type="checkbox" id="is_open" name="is_open" value="1" class="form-checkbox mt-1 block"
                        @if(old('is_open')) checked @endif>
                 @error('is_open')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -153,8 +139,12 @@
             <!-- Tür -->
             <div class="mb-4">
                 <label for="type" class="block text-sm font-medium text-gray-700">Otopark Türü</label>
-                <input type="text" id="type" name="type" class="form-input mt-1 block w-full" value="{{ old('type') }}"
-                       required>
+                <select id="type" name="type" class="form-select mt-1 block w-full" required>
+                    <option value="">Bir tür seçin</option>
+                    @foreach ($parkingLotTypes as $key => $value)
+                        <option value="{{ $key }}" {{ old('type') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
+                </select>
                 @error('type')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
@@ -163,7 +153,7 @@
             <!-- Kullanılabilir mi? -->
             <div class="mb-4">
                 <label for="is_available" class="block text-sm font-medium text-gray-700">Kullanılabilir mi?</label>
-                <input type="checkbox" id="is_available" name="is_available" class="form-checkbox mt-1 block"
+                <input type="checkbox" id="is_available" name="is_available" value="1" class="form-checkbox mt-1 block"
                        @if(old('is_available')) checked @endif>
                 @error('is_available')
                 <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -175,16 +165,16 @@
                 <label for="services" class="block text-sm font-medium text-gray-700">Servisler</label>
                 <div class="flex items-center space-x-4 mt-2">
                     <div>
-                        <input type="checkbox" id="has_electric_car_charging" name="has_electric_car_charging">
+                        <input type="checkbox" id="has_electric_car_charging" name="has_electric_car_charging" value="1">
                         <label for="has_electric_car_charging" class="text-sm font-medium text-gray-700">Elektrikli Araç
                             Şarjı</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="has_valet_service" name="has_valet_service">
+                        <input type="checkbox" id="has_valet_service" name="has_valet_service" value="1">
                         <label for="has_valet_service" class="text-sm font-medium text-gray-700">Vale Servisi</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="has_cleaning_service" name="has_cleaning_service">
+                        <input type="checkbox" id="has_cleaning_service" name="has_cleaning_service" value="1">
                         <label for="has_cleaning_service" class="text-sm font-medium text-gray-700">Temizlik
                             Servisi</label>
                     </div>

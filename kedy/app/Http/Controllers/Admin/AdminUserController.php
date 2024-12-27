@@ -13,7 +13,7 @@ class AdminUserController extends Controller
     public function index()
     {
         $users = User::paginate(20);
-        return view('admin.users.index', compact('users'));
+        return view('admin.users_index', compact('users'));
     }
 
     // Kullanıcı oluşturma sayfası
@@ -66,7 +66,7 @@ class AdminUserController extends Controller
         ]);
 
         // Başarılı güncelleme mesajı
-        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı başarıyla güncellendi.');
+        return redirect()->route('admin.user')->with('success', 'Kullanıcı başarıyla güncellendi.');
     }
 
     // Kullanıcı silme işlemi
