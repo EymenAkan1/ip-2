@@ -1,47 +1,81 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-6 py-8">
-        <h2 class="text-3xl font-semibold text-gray-800">Rezervasyonlar</h2>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-semibold text-green-800 mb-6">Rezervasyonlar</h2>
 
-        <div class="mt-6">
-            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
-                <thead>
-                <tr>
-                    <th class="px-4 py-2 border-b">ID</th>
-                    <th class="px-4 py-2 border-b">Kullanıcı</th>
-                    <th class="px-4 py-2 border-b">Araç Plakası</th>
-                    <th class="px-4 py-2 border-b">Durum</th>
-                    <th class="px-4 py-2 border-b">Başlangıç Tarihi</th>
-                    <th class="px-4 py-2 border-b">Bitiş Tarihi</th>
-                    <th class="px-4 py-2 border-b">İşlemler</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($reservations as $reservation)
+        <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                     <tr>
-                        <td class="px-4 py-2 border-b">{{ $reservation->id }}</td>
-                        <td class="px-4 py-2 border-b">{{ $reservation->customer->name }}</td>
-                        <td class="px-4 py-2 border-b">{{ $reservation->vehicle_plate }}</td>
-                        <td class="px-4 py-2 border-b">{{ $reservation->status }}</td>
-                        <td class="px-4 py-2 border-b">{{ $reservation->start_date }}</td>
-                        <td class="px-4 py-2 border-b">{{ $reservation->end_date }}</td>
-                        <td class="px-4 py-2 border-b">
-                            <a href="{{ route('admin.reservations_show', $reservation->id) }}" class="text-blue-500">Görüntüle</a>
-                            <form action="{{ route('admin.reservations_destroy', $reservation->id) }}" method="POST" class="inline-block ml-2">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500">Sil</button>
-                            </form>
-                        </td>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Kullanıcı
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Araç
+                            Plakası
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Başlangıç Tarihi
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bitiş
+                            Tarihi
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            İşlemler
+                        </th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-
-            <div class="mt-4">
-                {{ $reservations->links() }}
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($reservations as $reservation)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservation->id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">{{ $reservation->customer->name }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservation->vehicle_plate }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $reservation->status == 'confirmed' ? 'bg-green-100 text-green-800' : ($reservation->status == 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                        {{ ucfirst($reservation->status) }}
+                                    </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservation->start_date }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservation->end_date }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="{{ route('admin.reservations_show', $reservation->id) }}"
+                                   class="text-green-600 hover:text-green-900 mr-3">Görüntüle</a>
+                                <form action="{{ route('admin.reservations_destroy', $reservation->id) }}" method="POST"
+                                      class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-900"
+                                            onclick="return confirm('Bu rezervasyonu silmek istediğinizden emin misiniz?')">
+                                        Sil
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
+        </div>
+
+        <div class="mt-4">
+            {{ $reservations->links() }}
         </div>
     </div>
 @endsection
+

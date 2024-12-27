@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 class VendorDashboardController extends Controller
 {
     public function index(){
-        $reservations = Reservation::where('user_id', auth()->id())->get();
-        return view('vendor.dashboard.index', compact('reservations'));
+        $reservations = Reservation::where('customer_id', auth()->id())->get();
+        return view('vendor.dashboard_index', compact('reservations'));
     }
 
     public function edit($id){
-        $reservation = Reservation::where('user_id', auth::id())->FindOrFail($id);
-        return view('vendor.dashboard.edit', compact('reservation'));
+        $reservation = Reservation::where('customer_id', auth::id())->FindOrFail($id);
+        return view('vendor.dashboard_edit', compact('reservation'));
     }
 
     public function update(Request $request, $id){
@@ -27,9 +27,9 @@ class VendorDashboardController extends Controller
             'price' => 'required',
         ]);
 
-        $reservation = Reservation::where('user_id', auth()->id())->FindOrFail($id);
+        $reservation = Reservation::where('customer_id', auth()->id())->FindOrFail($id);
         $reservation->update([$validated]);
 
-        return redirect()->route('vendor.dashboard.index');
+        return redirect()->route('vendor.dashboard');
     }
 }
