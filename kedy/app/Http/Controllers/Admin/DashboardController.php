@@ -18,6 +18,15 @@ class DashboardController extends Controller
         $reservations = Reservation::all();
         $log = AuditLog::all();
         $logs = log::notice($log);
-        return view('admin.dashboard', compact('users', 'reservations', 'logs',));
+
+        $staffCount = User::where('role', 'staff')->count();
+
+        $vendorCount = User::where('role', 'vendor')->count();
+
+        $workerCount = User::where('role', 'worker')->count();
+
+        $customerCount = User::where('role', 'customer')->count();
+
+        return view('admin.dashboard', compact('users', 'reservations', 'logs', 'staffCount', 'vendorCount', 'workerCount', 'customerCount'));
     }
 }

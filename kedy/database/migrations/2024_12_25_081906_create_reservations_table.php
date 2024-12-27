@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('worker_id')->nullable();
             $table->timestamp('reservation_start_time');
             $table->timestamp('reservation_end_time');
-            $table->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('hour');
-            $table->enum('reservation_status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending');
+            $table->enum('duration_type', ['minute', 'hour', 'day', 'week', 'month', 'year'])->default('hour'); //form ile alakalı bu satırı nasıl bağlayacağım bakılacak
+            $table->enum('reservation_status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending'); //burası da bakılacak
             $table->decimal('price', 6, 2)->default(0);
             $table->timestamps();
 
