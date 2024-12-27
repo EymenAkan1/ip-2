@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="container mx-auto px-6 py-8">
@@ -21,7 +21,7 @@
                 @foreach($reservations as $reservation)
                     <tr>
                         <td class="px-4 py-2 border-b">{{ $reservation->id }}</td>
-                        <td class="px-4 py-2 border-b">{{ $reservation->user->name }}</td>
+                        <td class="px-4 py-2 border-b">{{ $reservation->customer->name }}</td>
                         <td class="px-4 py-2 border-b">{{ $reservation->vehicle_plate }}</td>
                         <td class="px-4 py-2 border-b">{{ $reservation->status }}</td>
                         <td class="px-4 py-2 border-b">{{ $reservation->start_date }}</td>

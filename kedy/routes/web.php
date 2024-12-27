@@ -77,6 +77,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('admin/user.delete/{id}', [AdminUserController::class, 'destroy'])->name('admin.users_destroy');
 
     Route::get('admin/reservations', [ReservationController::class, 'index'])->name('admin.reservations_index');
+    Route::get('admin/reservations/{reservation}', [ReservationController::class, 'show'])->name('admin.reservations_show');
     Route::get('admin/reservations/create', [ReservationController::class, 'create'])->name('admin.reservations_create');
     Route::post('admin/reservations', [ReservationController::class, 'store'])->name('admin.reservations_store');
     Route::get('admin/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('admin.reservations_edit');
@@ -99,12 +100,12 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 Route::middleware(['auth', 'role:vendor'])->group(function () {
     Route::get('vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
 
-    Route::get('vendor/reservations', [VendorReservationController::class, 'index'])->name('vendor.reservations.index');
-    Route::get('vendor/reservations/create', [VendorReservationController::class, 'create'])->name('vendor.reservations.create');
-    Route::post('vendor/reservations', [VendorReservationController::class, 'store'])->name('vendor.reservations.store');
-    Route::get('vendor/reservations/{reservation}/edit', [VendorReservationController::class, 'edit'])->name('vendor.reservations.edit');
-    Route::put('vendor/reservations/{reservation}', [VendorReservationController::class, 'update'])->name('vendor.reservations.update');
-    Route::delete('vendor/reservations/{reservation}', [VendorReservationController::class, 'destroy'])->name('vendor.reservations.destroy');
+    Route::get('vendor/reservations', [VendorReservationController::class, 'index'])->name('vendor.reservations_index');
+    Route::get('vendor/reservations/create', [VendorReservationController::class, 'create'])->name('vendor.reservations_create');
+    Route::post('vendor/reservations', [VendorReservationController::class, 'store'])->name('vendor.reservations_store');
+    Route::get('vendor/reservations/{reservation}/edit', [VendorReservationController::class, 'edit'])->name('vendor.reservations_edit');
+    Route::put('vendor/reservations/{reservation}', [VendorReservationController::class, 'update'])->name('vendor.reservations_update');
+    Route::delete('vendor/reservations/{reservation}', [VendorReservationController::class, 'destroy'])->name('vendor.reservations_destroy');
 });
 
 Route::middleware(['auth', 'role:customer'])->group(function () {
