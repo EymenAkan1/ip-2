@@ -3,13 +3,21 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\ReservationController;
+
 use App\Http\Controllers\Staff\StaffDashboardController;
+
 use App\Http\Controllers\Vendor\VendorDashboardController;
 use App\Http\Controllers\Vendor\VendorReservationController;
+use App\Http\Controllers\Vendor\VendorParkingLotController;
+use App\Http\Controllers\Vendor\VendorServiceController;
+use App\Http\Controllers\Vendor\VendorWorkerController;
+
 use App\Http\Controllers\Worker\WorkerDashboardController;
+
 use App\Http\Controllers\Customer\CustomerController;
 
 
@@ -98,15 +106,31 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 
 
 Route::middleware(['auth', 'role:vendor'])->group(function () {
+// Dashboard Routes
     Route::get('vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
+    Route::get('vendor/dashboard/edit/{id}', [VendorDashboardController::class, 'edit'])->name('vendor.dashboard.edit');
+    Route::post('vendor/dashboard/update/{id}', [VendorDashboardController::class, 'update'])->name('vendor.dashboard.update');
 
-    Route::get('vendor/reservations', [VendorReservationController::class, 'index'])->name('vendor.reservations_index');
-    Route::get('vendor/reservations/create', [VendorReservationController::class, 'create'])->name('vendor.reservations_create');
-    Route::post('vendor/reservations', [VendorReservationController::class, 'store'])->name('vendor.reservations_store');
-    Route::get('vendor/reservations/{reservation}/edit', [VendorReservationController::class, 'edit'])->name('vendor.reservations_edit');
-    Route::put('vendor/reservations/{reservation}', [VendorReservationController::class, 'update'])->name('vendor.reservations_update');
-    Route::delete('vendor/reservations/{reservation}', [VendorReservationController::class, 'destroy'])->name('vendor.reservations_destroy');
+    // Reservation Routes
+    Route::get('/reservations', [VendorReservationController::class, 'index'])->name('vendor.reservations.index');
+    Route::get('/reservations/edit/{id}', [VendorReservationController::class, 'edit'])->name('vendor.reservations.edit');
+    Route::post('/reservations/update/{id}', [VendorReservationController::class, 'update'])->name('vendor.reservations.update');
+    Route::delete('/reservations/destroy/{id}', [VendorReservationController::class, 'destroy'])->name('vendor.reservations.destroy');
+
+    Route::delete('/vendor/parking-lots/{id}', [ParkingLotController::class, 'destroy'])->name('vendor.parking_lots.destroy');
+
+    // Parking Lot Routes
+    Route::resource('parking-lots', VendorParkingLotController::class)->except(['show']);
+    Route::get('/vendor/parking-lots', [ParkingLotController::class, 'index'])->name('vendor.parking_lots');
+    Route::post('/vendor/parking-lots', [ParkingLotController::class, 'store'])->name('vendor.parking_lots.store');
+
+    // Service Routes
+    Route::resource('services', VendorServiceController::class)->except(['show']);
+
+    // Worker Routes
+    Route::resource('workers', VendorWorkerController::class)->except(['show']);
 });
+
 
 Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
