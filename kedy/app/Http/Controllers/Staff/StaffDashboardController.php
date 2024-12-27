@@ -99,9 +99,9 @@ class StaffDashboardController extends Controller
             'is_open' => $validated['is_open'] ?? 0,
             'type' => $validated['type'],
             'is_available' => $validated['is_available'] ?? 0,
-            'has_electric_car_charging' => $request->has($validated['has_electric_car_charging']),
-            'has_valet_service' => $request->has($validated['has_valet_service']),
-            'has_cleaning_service' => $request->has($validated['has_cleaning_service']),
+            'has_electric_car_charging' => $request->boolean('has_electric_car_charging'), // Boolean olarak alınır
+            'has_valet_service' => $request->boolean('has_valet_service'), // Boolean olarak alınır
+            'has_cleaning_service' => $request->boolean('has_cleaning_service'), // Boolean olarak alınır
         ]);
 
 

@@ -23,10 +23,10 @@
                         <td class="px-4 py-2 border-b">{{ $user->email }}</td>
                         <td class="px-4 py-2 border-b">{{ $user->role }}</td>
                         <td class="px-4 py-2 border-b">
-                            <a href="{{ route('admin.users.show', $user->id) }}" class="text-blue-500">Görüntüle</a>
-                            <a href="{{ route('admin.users.edit', $user->id) }}"
+                            <a href="{{ route('admin.users_show', $user->id) }}" class="text-blue-500">Görüntüle</a>
+                            <a href="{{ route('admin.users_edit', $user->id) }}"
                                class="text-yellow-500 ml-2">Düzenle</a>
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                            <form action="{{ route('admin.users_destroy', $user->id) }}" method="POST"
                                   class="inline-block ml-2">
                                 @csrf
                                 @method('DELETE')

@@ -20,7 +20,7 @@
                         <i class="fas fa-box text-5xl"></i> <!-- Ürün ikonu -->
                     </div>
                 </div>
-                <a href="{{ route('admin.reservations.index') }}" class="text-blue-500 hover:underline mt-4 block">
+                <a href="{{ route('admin.reservations_index') }}" class="text-blue-500 hover:underline mt-4 block">
                     Detaylar <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -36,7 +36,7 @@
                         <i class="fas fa-customers text-5xl"></i>
                     </div>
                 </div>
-                <a href="{{ route('admin.users.index') }}" class="text-green-500 hover:underline mt-4 block">
+                <a href="{{ route('admin.users_index') }}" class="text-green-500 hover:underline mt-4 block">
                     Detaylar <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -98,7 +98,7 @@
             <div class="p-6 bg-white rounded shadow">
                 <h2 class="text-xl font-semibold text-gray-800">Kullanıcılar</h2>
                 <p class="mt-2 text-gray-600">Sistemdeki tüm kullanıcıları görüntüle ve yönet.</p>
-                <a href="{{ route('admin.users.index') }}" class="mt-4 inline-block text-blue-500 text-sm">
+                <a href="{{ route('admin.users_index') }}" class="mt-4 inline-block text-blue-500 text-sm">
                     Devamını Gör
                 </a>
             </div>
@@ -107,7 +107,7 @@
             <div class="p-6 bg-white rounded shadow">
                 <h2 class="text-xl font-semibold text-gray-800">Rezervasyonlar</h2>
                 <p class="mt-2 text-gray-600">Tüm rezervasyon kayıtlarını görüntüleyin.</p>
-                <a href="{{ route('admin.reservations.index') }}" class="mt-4 inline-block text-blue-500 text-sm">
+                <a href="{{ route('admin.reservations_index') }}" class="mt-4 inline-block text-blue-500 text-sm">
                     Devamını Gör
                 </a>
             </div>

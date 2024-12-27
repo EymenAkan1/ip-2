@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container mx-auto py-6">
-        <form action="{{ route('admin.reservations.update', $reservation->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
+        <form action="{{ route('admin.reservations_update', $reservation->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
             @csrf
             @method('PUT')
             <div class="mb-4">

@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container mx-auto py-6">
-        <form action="{{ route('admin.reservations.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
+        <form action="{{ route('admin.reservations_store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
             @csrf
             <div class="mb-4">
                 <label for="user_id" class="block text-sm font-medium text-gray-700">Kullanıcı</label>

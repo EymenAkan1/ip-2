@@ -27,8 +27,8 @@
                         <td class="px-4 py-2 border-b">{{ $reservation->start_date }}</td>
                         <td class="px-4 py-2 border-b">{{ $reservation->end_date }}</td>
                         <td class="px-4 py-2 border-b">
-                            <a href="{{ route('admin.reservations.show', $reservation->id) }}" class="text-blue-500">Görüntüle</a>
-                            <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" class="inline-block ml-2">
+                            <a href="{{ route('admin.reservations_show', $reservation->id) }}" class="text-blue-500">Görüntüle</a>
+                            <form action="{{ route('admin.reservations_destroy', $reservation->id) }}" method="POST" class="inline-block ml-2">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500">Sil</button>

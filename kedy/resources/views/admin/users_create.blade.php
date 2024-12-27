@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container mx-auto py-6">
-        <form action="{{ route('admin.store.user') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
+        <form action="{{ route('admin.users_store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-700">Ad</label>

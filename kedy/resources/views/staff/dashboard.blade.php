@@ -15,6 +15,20 @@
         <form action="{{ route('staff.parking_lot.store') }}" method="POST">
             @csrf
 
+            <!-- Vendor Id-->
+            <div class="mb-4">
+                <label for="vendor_id" class="block text-sm font-medium text-gray-700">Vendor Seçin</label>
+                <select id="vendor_id" name="vendor_id" class="form-select mt-1 block w-full" required>
+                    <option value="">Bir Vendor Seçin</option>
+                    @foreach ($vendors as $vendor)
+                        <option value="{{ $vendor->id }}">ID:{{ $vendor->id }}</option>
+                    @endforeach
+                </select>
+                @error('vendor_id')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Vendor -->
             <div class="mb-4">
                 <label for="vendor_name" class="block text-sm font-medium text-gray-700">Vendor Seçin</label>
@@ -166,12 +180,11 @@
                 <div class="flex items-center space-x-4 mt-2">
                     <div>
                         <input type="checkbox" id="has_electric_car_charging" name="has_electric_car_charging" value="1">
-                        <label for="has_electric_car_charging" class="text-sm font-medium text-gray-700">Elektrikli Araç
-                            Şarjı</label>
+                        <label for="has_electric_car_charging" class="text-sm font-medium text-gray-700">Elektrikli Araç Şarjı</label>
                     </div>
                     <div>
                         <input type="checkbox" id="has_valet_service" name="has_valet_service" value="1">
-                        <label for="has_valet_service" class="text-sm font-medium text-gray-700">Vale Servisi</label>
+                        <label for="has_valet_service" class="text-sm font-medium text-gray-700">Vale Hizmeti</label>
                     </div>
                     <div>
                         <input type="checkbox" id="has_cleaning_service" name="has_cleaning_service" value="1">

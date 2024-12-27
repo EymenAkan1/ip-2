@@ -68,19 +68,20 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
-    Route::get('admin/create.user', [AdminUserController::class, 'create'])->name('admin.create.user');
-    Route::post('admin/store.user', [AdminUserController::class, 'store'])->name('admin.store.user');
-    Route::get('admin/edit.user/{id}', [AdminUserController::class, 'edit'])->name('admin.edit.user');
-    Route::put('admin/update.user/{id}', [AdminUserController::class, 'update'])->name('admin.update.user');
-    Route::delete('admin/delete.user/{id}', [AdminUserController::class, 'destroy'])->name('admin.delete.user');
+    Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.users_index');
+    Route::get('admin/users/{user}', [AdminUserController::class, 'show'])->name('admin.users_show');
+    Route::get('admin/user.create', [AdminUserController::class, 'create'])->name('admin.users_create');
+    Route::post('admin/user.store', [AdminUserController::class, 'store'])->name('admin.users_store');
+    Route::get('admin/user.edit/{id}', [AdminUserController::class, 'edit'])->name('admin.users_edit');
+    Route::put('admin/user.update/{id}', [AdminUserController::class, 'update'])->name('admin.users_update');
+    Route::delete('admin/user.delete/{id}', [AdminUserController::class, 'destroy'])->name('admin.users_destroy');
 
-    Route::get('admin/reservations', [ReservationController::class, 'index'])->name('admin.reservations.index');
-    Route::get('admin/reservations/create', [ReservationController::class, 'create'])->name('admin.reservations.create');
-    Route::post('admin/reservations', [ReservationController::class, 'store'])->name('admin.reservations.store');
-    Route::get('admin/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('admin.reservations.edit');
-    Route::put('admin/reservations/{reservation}', [ReservationController::class, 'update'])->name('admin.reservations.update');
-    Route::delete('admin/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('admin.reservations.destroy');
+    Route::get('admin/reservations', [ReservationController::class, 'index'])->name('admin.reservations_index');
+    Route::get('admin/reservations/create', [ReservationController::class, 'create'])->name('admin.reservations_create');
+    Route::post('admin/reservations', [ReservationController::class, 'store'])->name('admin.reservations_store');
+    Route::get('admin/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('admin.reservations_edit');
+    Route::put('admin/reservations/{reservation}', [ReservationController::class, 'update'])->name('admin.reservations_update');
+    Route::delete('admin/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('admin.reservations_destroy');
 
 });
 

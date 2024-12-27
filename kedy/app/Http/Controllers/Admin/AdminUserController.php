@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use Couchbase\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AdminUserController extends Controller
 {
@@ -19,7 +21,7 @@ class AdminUserController extends Controller
     // Kullanıcı oluşturma sayfası
     public function create()
     {
-        return view('admin.users.create');
+        return view('admin.users_create');
     }
 
     // Yeni kullanıcıyı kaydetme
@@ -38,7 +40,7 @@ class AdminUserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı başarıyla oluşturuldu.');
+        return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla oluşturuldu.');
     }
 
     // Kullanıcı düzenleme sayfası
@@ -46,40 +48,47 @@ class AdminUserController extends Controller
     {
         // Kullanıcıyı id'ye göre bul
         $user = User::findOrFail($id);
+        $roles = ['admin', 'staff', 'vendor', 'worker', 'customer'];
 
         // Kullanıcıyı edit sayfasına gönder
-        return view('admin.users.edit', compact('user'));
+        return view('admin.users_edit', compact('user', 'roles'));
     }
 
     // Kullanıcıyı güncelleme
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id, // email benzersiz olmalı, ancak mevcut kullanıcıya ait email geçerli olmalı
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'role' => 'required|in:admin,staff,vendor,worker,customer',
         ]);
 
         // Kullanıcıyı güncelle
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
         ]);
 
         // Başarılı güncelleme mesajı
-        return redirect()->route('admin.user')->with('success', 'Kullanıcı başarıyla güncellendi.');
+        return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla güncellendi.');
     }
 
     // Kullanıcı silme işlemi
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı başarıyla silindi.');
+        return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla silindi.');
     }
 
     // Kullanıcı profili gösterme
     public function show(User $user)
     {
-        return view('admin.users.show', compact('user'));
+        return view('admin.users_show', compact('user'));
     }
 
     // Kullanıcı profilini güncelleme
@@ -96,7 +105,7 @@ class AdminUserController extends Controller
             $user->update(['password' => Hash::make($request->password)]);
         }
 
-        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı profili başarıyla güncellendi.');
+        return redirect()->route('admin.users_index')->with('success', 'Kullanıcı profili başarıyla güncellendi.');
     }
 
 }
