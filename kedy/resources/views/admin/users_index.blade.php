@@ -40,13 +40,10 @@
                                 <a href="{{ route('admin.users_edit', $user->id) }}"
                                    class="text-yellow-600 hover:text-yellow-900 mr-3">Düzenle</a>
                                 <form action="{{ route('admin.users_destroy', $user->id) }}" method="POST"
-                                      class="inline-block">
+                                      onsubmit="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900"
-                                            onclick="return confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')">
-                                        Sil
-                                    </button>
+                                    <button type="submit" class="btn btn-danger">Sil</button>
                                 </form>
                             </td>
                         </tr>

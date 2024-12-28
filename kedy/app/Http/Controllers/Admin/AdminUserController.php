@@ -62,21 +62,21 @@ class AdminUserController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($user->id),
             ],
             'role' => 'required|in:admin,staff,vendor,worker,customer',
         ]);
 
+        // Formdan gelen verileri gör
+
         // Kullanıcıyı güncelle
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
+        User::where('role', $user->role)->update([
+            'role' => $request->role ?? $user->role,
         ]);
 
         // Başarılı güncelleme mesajı
         return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla güncellendi.');
     }
+
 
     // Kullanıcı silme işlemi
     public function destroy(User $user)
@@ -84,6 +84,7 @@ class AdminUserController extends Controller
         $user->delete();
         return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla silindi.');
     }
+
 
     // Kullanıcı profili gösterme
     public function show(User $user)
