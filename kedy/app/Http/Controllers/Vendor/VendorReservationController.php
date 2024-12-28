@@ -9,14 +9,17 @@ class VendorReservationController extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::where('vendor_id', auth()->user()->id)->get();
+        $reservations = Reservation::whereHas('parkingLot', function ($query) {
+            $query->where('vendor_id', auth()->id());
+        })->get();
         return view('vendor.products.index', compact('reservations'));
     }
 
-
     public function edit($id)
     {
-        $reservation = Reservation::findOrFail($id);
+        $reservation = Reservation::whereHas('parkingLot', function ($query) {
+            $query->where('vendor_id', auth()->id());
+        })->findOrFail($id);
         return view('vendor.reservation.edit', compact('reservation'));
     }
 
@@ -29,6 +32,10 @@ class VendorReservationController extends Controller
             'reservation_status' => 'required',
             'price' => 'required',
         ]);
+
+        $reservation = Reservation::whereHas('parkingLot', function ($query) {
+            $query->where('vendor_id', auth()->id());
+        })->findOrFail($id);
 
         $reservation = reservation::findOrFail($id);
         $reservation->reservation_start_time = $request->reservation_start_time;
@@ -43,7 +50,9 @@ class VendorReservationController extends Controller
 
     public function destroy($id)
     {
-        $reservation = Reservation::findOrFail($id);
+        $reservation = Reservation::whereHas('parkingLot', function ($query) {
+            $query->where('vendor_id', auth()->id());
+        })->findOrFail($id);
         $reservation->delete();
 
         return redirect()->route('vendor.reservations.index')->with('success', 'Ürün başarıyla silindi.');

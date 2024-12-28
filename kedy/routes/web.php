@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\Admin\Customer1Controller;
 
 use App\Http\Controllers\Staff\StaffDashboardController;
 
@@ -91,6 +92,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('admin.reservations_edit');
     Route::put('admin/reservations/{reservation}', [ReservationController::class, 'update'])->name('admin.reservations_update');
     Route::delete('admin/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('admin.reservations_destroy');
+
+    Route::get('admin/all_parking_lots', [AdminUserController::class, 'index'])->name('admin.all_parking_lots_index');
+    Route::get('admin/available_parking_lots', [AdminUserController::class, 'index'])->name('admin.available_parking_lots_index');
+
+    Route::get('admin/customers', [Customer1Controller::class, 'index'])->name('admin.customers_index');
 
 });
 

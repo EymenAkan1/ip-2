@@ -90,7 +90,7 @@ class User extends Authenticatable
                 $user->parent_id = $adminUser ? $adminUser->id : null;
             } elseif ($user->role === 'vendor') {
                 $user->parent_id = null;
-            } elseif ($user->role === 'vendor_worker') {
+            } elseif ($user->role === 'worker') {
                 $vendorUser = User::where('role', 'vendor')->first();
                 $user->parent_id = $vendorUser ? $vendorUser->id : null;
             } else {
