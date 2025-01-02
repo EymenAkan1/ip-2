@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Models\ParkingLot;
 use App\Models\Reservation;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class VendorDashboardController extends Controller
@@ -12,13 +13,12 @@ class VendorDashboardController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-
+        $vendor = Vendor::find($userId);
         $parkingLotsCount = ParkingLot::where('vendor_id', $userId)->count();
-        $activeServicesCount = Service::where('vendor_id', $userId)->where('status', 'active')->count();
-        $activeReservationsCount = Reservation::where('vendor_id', $userId)->where('status', 'active')->count();
+        $activeReservationsCount = Reservation::where('vendor_id', $userId)->where('reservation_status', 'confirmed')->count();
         $parkingLots = ParkingLot::where('vendor_id', $userId)->get();
 
-        return view('vendor.dashboard', compact('parkingLotsCount', 'activeServicesCount', 'activeReservationsCount', 'parkingLots'));
+        return view('vendor.dashboard', compact('parkingLotsCount', 'activeReservationsCount', 'parkingLots','vendor'));
     }
 
     public function edit($id)

@@ -29,19 +29,11 @@ class ParkingLot extends Model
         'has_electric_car_charging',
     ];
 
-    /**
-     * Parking Lot'un vendor ilişkisi
-     * Bir Parking Lot sadece bir Vendor'a ait olacaktır
-     */
     public function vendor()
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
 
-    /**
-     * Parking Lot'un rezervasyon ilişkisi
-     * Bir Parking Lot, birden fazla rezervasyona sahip olabilir
-     */
     public function reservations()
     {
         return $this->hasMany(Reservation::class);

@@ -8,5 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class CarModel extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
+
+    protected $fillable = ['make_id', 'model_name'];
+
+    public function make()
+    {
+        return $this->belongsTo(CarMake::class, 'make_id');
+    }
+
 }

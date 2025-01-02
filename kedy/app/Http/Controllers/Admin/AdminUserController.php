@@ -11,20 +11,17 @@ use Illuminate\Validation\Rule;
 
 class AdminUserController extends Controller
 {
-    // Kullanıcıları listele
     public function index()
     {
         $users = User::paginate(20);
         return view('admin.users_index', compact('users'));
     }
 
-    // Kullanıcı oluşturma sayfası
     public function create()
     {
         return view('admin.users_create');
     }
 
-    // Yeni kullanıcıyı kaydetme
     public function store(Request $request)
     {
         $request->validate([
@@ -43,18 +40,14 @@ class AdminUserController extends Controller
         return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla oluşturuldu.');
     }
 
-    // Kullanıcı düzenleme sayfası
     public function edit($id)
     {
-        // Kullanıcıyı id'ye göre bul
         $user = User::findOrFail($id);
         $roles = ['admin', 'staff', 'vendor', 'worker', 'customer'];
 
-        // Kullanıcıyı edit sayfasına gönder
         return view('admin.users_edit', compact('user', 'roles'));
     }
 
-    // Kullanıcıyı güncelleme
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -66,19 +59,14 @@ class AdminUserController extends Controller
             'role' => 'required|in:admin,staff,vendor,worker,customer',
         ]);
 
-        // Formdan gelen verileri gör
-
-        // Kullanıcıyı güncelle
         User::where('role', $user->role)->update([
             'role' => $request->role ?? $user->role,
         ]);
 
-        // Başarılı güncelleme mesajı
         return redirect()->route('admin.users_index')->with('success', 'Kullanıcı başarıyla güncellendi.');
     }
 
 
-    // Kullanıcı silme işlemi
     public function destroy(User $user)
     {
         $user->delete();
@@ -86,14 +74,12 @@ class AdminUserController extends Controller
     }
 
 
-    // Kullanıcı profili gösterme
     public function show(User $user)
     {
         return view('admin.users_show', compact('user'));
     }
 
-    // Kullanıcı profilini güncelleme
-    public function updateProfile(Request $request, User $user)
+   public function updateProfile(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required',

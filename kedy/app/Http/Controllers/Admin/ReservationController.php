@@ -10,7 +10,7 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::with('customer')->paginate(10); // Kullanıcı bilgileriyle birlikte al
+        $reservations = Reservation::with('customer')->paginate(10);
         return view('admin.reservation_index', compact('reservations'));
     }
 

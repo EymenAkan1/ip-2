@@ -17,19 +17,11 @@ class Vendor extends Model
         'contact_email',
     ];
 
-    /**
-     * Vendor'un kullanıcı ilişkisi
-     * Bir Vendor sadece bir User'a bağlıdır
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Vendor'un otopark ilişkisi
-     * Bir Vendor birden fazla parking lot oluşturabilir
-     */
     public function parkingLots()
     {
         return $this->hasMany(ParkingLot::class, 'vendor_id');

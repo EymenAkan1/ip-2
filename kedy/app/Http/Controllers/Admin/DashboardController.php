@@ -17,6 +17,7 @@ class DashboardController extends Controller
         $reservations = Reservation::all();
         $staffCount = User::where('role', 'staff')->count();
         $vendorCount = User::where('role', 'vendor')->count();
+        $vendor = User::where('role', 'vendor');
         $workerCount = User::where('role', 'worker')->count();
         $customerCount = User::where('role', 'customer')->count();
         $userCount = User::all()->count();
@@ -33,6 +34,7 @@ class DashboardController extends Controller
             'customerCount',
             'allparkinglotCount',
             'openparkinglotCount',
+            'vendor'
         ));
     }
 }

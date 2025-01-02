@@ -13,10 +13,8 @@ use App\Http\Controllers\Controller;
 
 class StaffDashboardController extends Controller
 {
-    // Dashboard sayfasını görüntüle
     public function index()
     {
-        // Vendor ve parkinglots verilerini al
         $vendors = Vendor::all();
         $parkinglots = ParkingLot::all();
         $cities = City::orderBy('name', 'asc')->get();
@@ -38,20 +36,16 @@ class StaffDashboardController extends Controller
 
     public function getDistricts($city_id)
     {
-        // Veritabanından şehir ID'sine bağlı ilçeleri al
         $districts = District::where('city_id', $city_id)->get();
         return response()->json($districts);
     }
 
-    // İlçe seçildiğinde mahalleleri al
     public function getTowns($district_id)
     {
-        // Veritabanından ilçe ID'sine bağlı mahalleleri al
         $towns = Town::where('district_id', $district_id)->get();
         return response()->json($towns);
     }
 
-    // İlçe seçildiğinde mahalleleri al
     public function getNeighbourhoods($town_id)
     {
         // Veritabanından ilçe ID'sine bağlı mahalleleri al
@@ -59,11 +53,10 @@ class StaffDashboardController extends Controller
         return response()->json($neighbourhoods);
     }
 
-    // Veri ekleme işlemi
+
     public function storeParkingLot(Request $request)
     {
 
-        // Form verilerini doğrula
         \Log::info('Gelen Form Verileri:', $request->all());
         $validated = $request->validate([
             'vendor_id' => 'required|exists:vendors,id',
@@ -84,7 +77,6 @@ class StaffDashboardController extends Controller
             'has_cleaning_service' => 'nullable|boolean',
         ]);
 
-        // Veritabanına kaydet
         ParkingLot::create([
             'vendor_id' => $validated['vendor_id'],
             'name' => $validated['ParkingLot_name'],
@@ -99,9 +91,9 @@ class StaffDashboardController extends Controller
             'is_open' => $validated['is_open'] ?? 0,
             'type' => $validated['type'],
             'is_available' => $validated['is_available'] ?? 0,
-            'has_electric_car_charging' => $request->boolean('has_electric_car_charging'), // Boolean olarak alınır
-            'has_valet_service' => $request->boolean('has_valet_service'), // Boolean olarak alınır
-            'has_cleaning_service' => $request->boolean('has_cleaning_service'), // Boolean olarak alınır
+            'has_electric_car_charging' => $request->boolean('has_electric_car_charging'),
+            'has_valet_service' => $request->boolean('has_valet_service'),
+            'has_cleaning_service' => $request->boolean('has_cleaning_service'),
         ]);
 
 

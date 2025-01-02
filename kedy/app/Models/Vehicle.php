@@ -23,10 +23,6 @@ class Vehicle extends Model
         'role',
     ];
 
-    /**
-     * Vehicle'ın kullanıcı ilişkisi
-     * Bir Vehicle, bir User'a ait olacaktır
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

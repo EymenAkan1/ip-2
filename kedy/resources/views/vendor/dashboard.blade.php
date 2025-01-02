@@ -5,7 +5,6 @@
         <h1 class="text-3xl font-semibold text-green-800 mb-6">Satıcı Paneli</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Toplam Otoparklar -->
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="p-5">
                     <div class="flex items-center">
@@ -48,7 +47,7 @@
                         <td class="py-3 px-4 text-sm text-gray-700">{{ $parkingLot->price }} ₺</td>
                         <td class="py-3 px-4 text-sm text-gray-700">{{ $parkingLot->capacity }}</td>
                         <td class="py-3 px-4 text-sm">
-                            <!-- Düzenle Butonu -->
+
                             <a href="{{ route('vendor.parking-lots.edit', $parkingLot->id) }}"
                                class="text-blue-500 hover:text-blue-700">Düzenle</a>
                         </td>
