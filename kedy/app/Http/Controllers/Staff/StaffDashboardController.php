@@ -48,7 +48,6 @@ class StaffDashboardController extends Controller
 
     public function getNeighbourhoods($town_id)
     {
-        // Veritabanından ilçe ID'sine bağlı mahalleleri al
         $neighbourhoods = Neighbourhood::where('town_id', $town_id)->get();
         return response()->json($neighbourhoods);
     }

@@ -13,8 +13,9 @@ class CarMake extends Model
 
     protected $fillable = ['make'];
 
+
     public function models()
     {
-        return $this->hasMany(CarModel::class, 'make_id');
+        return $this->hasMany(CarModel::class, 'make_id', 'id');
     }
 }

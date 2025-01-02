@@ -10,12 +10,11 @@ class CarModel extends Model
     use HasFactory;
 
     public $timestamps = false;
-
-    protected $fillable = ['make_id', 'model_name'];
+    protected $table = 'car_models';
+    protected $fillable = ['id', 'make_id', 'model_name'];
 
     public function make()
     {
-        return $this->belongsTo(CarMake::class, 'make_id');
+        return $this->belongsTo(CarMake::class, 'make_id', 'id');
     }
-
 }
