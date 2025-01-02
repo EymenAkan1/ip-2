@@ -1,5 +1,7 @@
 <h1 style="color: #e74c3c; text-align: center;">Karşınızda PARKI</h1>
 
+<h1> Proje Tamamlandığında Mobil Programı ile beraber çıkış yapacaktır yani sisteme hem telefondan hemde bilgisayarınızdan aynı anda erişebileceksiniz</h1>
+
 <div style="margin-bottom: 20px;">
   <h4 style="font-weight: bold; color: #2c3e50;">**Bu projenin konusu ve amacı nedir?**</h4>
   <h5 style="font-style: italic; color: #34495e;">
